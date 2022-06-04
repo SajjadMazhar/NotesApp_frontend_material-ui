@@ -10,6 +10,7 @@ import {
     Route,
     Routes
 } from 'react-router-dom'
+import Profile from './components/pages/Profile';
 
 function App() {
   return (
@@ -30,6 +31,11 @@ function App() {
                 <BasicPopover/>
               </div>
             }/>
+            <Route path="/profile" element={
+              <div className='app' style={{display:"flex", justifyContent:"center"}}>
+                <Profile />
+              </div>
+            } />
           </Routes>
       </BrowserRouter>
     </NoteState>

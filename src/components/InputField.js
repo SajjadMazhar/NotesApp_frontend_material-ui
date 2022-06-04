@@ -16,7 +16,7 @@ const InputField = () => {
             label="Title"
             multiline
             rows={1}
-            style={{width:"100%"}}
+            style={{width:"60%"}}
             sx={{m:2}}
             name='title'
             value={noteInput.title}
@@ -28,7 +28,7 @@ const InputField = () => {
             label="Content"
             multiline
             rows={4}
-            style={{width:"100%"}}
+            style={{width:"60%"}}
             sx={{m:2}}
             name='content'
             value={noteInput.content}

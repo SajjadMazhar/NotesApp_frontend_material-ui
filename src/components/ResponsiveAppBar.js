@@ -92,12 +92,13 @@ const ResponsiveAppBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                    <Link to={`/${page}`} style={{textDecoration:"none"}}><Typography textAlign="center">{page}</Typography></Link>
                   </MenuItem>
               ))}
             </Menu>
           </Box>
           <NoteAltIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Link to="/" style={{textDecoration:"none", color:"white"}}>
           <Typography
             variant="h5"
             noWrap
@@ -116,6 +117,7 @@ const ResponsiveAppBar = () => {
           >
             NoteIt
           </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
                <Link to={`/${page}`} style={{textDecoration:"none"}}>
@@ -153,9 +155,11 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
+                <Link to={`/${setting}`} style={{textDecoration:"none", color:"black"}}>
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
