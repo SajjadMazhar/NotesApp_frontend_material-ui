@@ -12,8 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
+import { Link } from 'react-router-dom';
 
-const pages = ['Favourites', 'About'];
+const pages = ['favourites', 'About'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
@@ -40,6 +41,7 @@ const ResponsiveAppBar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <NoteAltIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+         <Link to="/" style={{textDecoration:"none", color:"white"}}>
           <Typography
             variant="h6"
             noWrap
@@ -57,6 +59,7 @@ const ResponsiveAppBar = () => {
           >
             NoteIt
           </Typography>
+         </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -89,8 +92,8 @@ const ResponsiveAppBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
               ))}
             </Menu>
           </Box>
@@ -111,17 +114,19 @@ const ResponsiveAppBar = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            NoteIt
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
+               <Link to={`/${page}`} style={{textDecoration:"none"}}>
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+               {page}
               </Button>
+              </Link>
             ))}
           </Box>
 

@@ -1,11 +1,13 @@
 import React, { useContext } from 'react'
 import {TextField, Stack, Button, Grid} from '@mui/material'
 import noteContext from '../context/NoteContext'
+import Radios from './Radios'
 
 const InputField = () => {
   const {
     setNoteInput,
     handleSetNotes,
+    noteInput
    } = useContext(noteContext)
   return (
     <Grid container justifyContent="center" >
@@ -17,6 +19,7 @@ const InputField = () => {
             style={{width:"100%"}}
             sx={{m:2}}
             name='title'
+            value={noteInput.title}
             onChange={(e)=>setNoteInput(prev=> ({...prev, [e.target.name]:e.target.value}))}
   
           />
@@ -28,11 +31,15 @@ const InputField = () => {
             style={{width:"100%"}}
             sx={{m:2}}
             name='content'
+            value={noteInput.content}
             onChange={(e)=>setNoteInput(prev=> ({...prev, [e.target.name]:e.target.value}))}
    
           />
+          <Radios/>
         <Stack spacing={2} direction="row">
-          <Button variant='contained' size='large' color='warning' onClick={handleSetNotes}>Add Note</Button>
+          <Button variant='contained' disabled={
+            noteInput.title && noteInput.content ? false:true
+          } size='large' color='warning' onClick={handleSetNotes}>Add Note</Button>
         </Stack>
     </Grid>
   )

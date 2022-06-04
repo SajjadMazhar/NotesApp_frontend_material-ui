@@ -12,7 +12,7 @@ const NoteCard = ({data}) => {
     const {toggleFavourite, deleteNote, handlePopover} = useContext(noteContext)
   return (
       <div style={{padding:"10px"}}>
-        <Card sx={{ minWidth: 275 }} >
+        <Card sx={{ minWidth: 275, bgcolor:data.color }}>
         <CardContent>
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {data.createdAt}

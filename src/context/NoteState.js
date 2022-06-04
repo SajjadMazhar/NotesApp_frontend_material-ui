@@ -7,6 +7,7 @@ const initialNote = [{
   title:"title1",
   content:"content1",
   isFavourite,
+  color:'error.light',
   createdAt:"now"
 }]
 
@@ -16,19 +17,21 @@ const NoteState = ({children}) => {
     const [noteInput, setNoteInput] = useState({title:"", content:""})
     const [updateInput, setUpdateInput] = useState({id:null, title:"", content:""})
     const [anchorEl, setAnchorEl] = useState(null);
-    const [updating, toggleUpdating] = useState(false)
+    const [radioValue, setRadioValue] = useState("")
 
     // adding notes
     const handleSetNotes = ()=>{
+      if(!validation(noteInput)) return console.log("The field is empty");
       const id = Math.floor(Math.random()*1E9)
       const updatedList = [...notes, {
         id,
         title:noteInput.title, content:noteInput.content,
-        isFavourite:false, createdAt: new Date().toDateString()
+        isFavourite:false, createdAt: new Date().toDateString(), color:radioValue
       }]
       setNotes(updatedList)
-
+      setNoteInput({title:"", content:""})
     }
+
 
     // delete note
     const deleteNote = (id)=>{
@@ -41,7 +44,6 @@ const NoteState = ({children}) => {
       setAnchorEl(event.currentTarget);
       const selectedNote = notes.find(note=> note.id===id)
       setUpdateInput({id,title:selectedNote.title, content:selectedNote.content})
-      toggleUpdating(true)
     }
 
     // updating the note
@@ -56,14 +58,24 @@ const NoteState = ({children}) => {
         }
       })
       setNotes(updatedList)
-      toggleUpdating(false)
       handleClose()
+    }
+
+    // radio button handler
+    const handleRadioChange = (e)=>{
+      setRadioValue(e.target.value)
+    }
+
+    // validation Check
+    const validation = (testData)=>{
+      const regex = /^(?!\s*$).+/
+      return regex.test(testData.title) && regex.test(testData.content)
     }
 
     // toggling the favourite notes 
     const toggleFavourite = (id)=>{
       const updatedList = notes.map(note=> {
-        if(note.id == id){
+        if(note.id === id){
           return {
             ...note, isFavourite:note.isFavourite? false:true
           }
@@ -78,9 +90,10 @@ const NoteState = ({children}) => {
     setAnchorEl(null);
   };
 
-
+  
 const values ={
   notes, 
+  noteInput,
   setNoteInput,
   handleSetNotes,
   toggleFavourite,
@@ -91,6 +104,9 @@ const values ={
   updateInput,
   setUpdateInput,
   updateNote,
+  setRadioValue,
+  radioValue,
+  handleRadioChange
 }
   return (
     <noteContext.Provider value={values}>
