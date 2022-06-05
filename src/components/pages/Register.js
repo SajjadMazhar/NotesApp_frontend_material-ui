@@ -1,9 +1,16 @@
-import React from 'react'
-import {TextField, Stack, Button, Card, CardContent, Typography} from '@mui/material'
-
+import React, { useContext } from 'react'
+import {TextField, Stack, Button, Card, Typography} from '@mui/material'
+import { orange } from '@mui/material/colors';
+import userContext from '../../context/UserContext';
+const muicolor = orange[200]
 const Register = () => {
+  
+  const {
+      handleOnChangeRegisterInputs,
+      registerInputs
+    } = useContext(userContext)
   return (
-    <Card sx={{px:10, py:7, width:"50%", display:"flex", justifyContent:"center"}}>
+    <Card sx={{px:10, py:7, width:"50%", display:"flex", justifyContent:"center", bgcolor:muicolor}}>
       
       <Stack spacing={2} sx={{width:"60%"}} >
         <Typography variant="h5" sx={{p:2}} align='center'>
@@ -11,19 +18,27 @@ const Register = () => {
         </Typography>
       
           <TextField
+          value={registerInputs.name}
+          name="name"
+          onChange={handleOnChangeRegisterInputs}
           id="filled-hidden-label-small"
           variant="filled"
           label="Name"
           size="small"
-
         />
         <TextField
+          value={registerInputs.email}
+          name="email"
+          onChange={handleOnChangeRegisterInputs}
           id="filled-hidden-label-normal"
           variant="filled"
           size="small"
           label="Email"
         />
         <TextField
+          value={registerInputs.password}
+          name="password"
+          onChange={handleOnChangeRegisterInputs}
           id="filled-hidden-label-normal"
           variant="filled"
           size="small"
@@ -32,18 +47,33 @@ const Register = () => {
         />
         <TextField
           id="filled-hidden-label-normal"
+          value={registerInputs.confirmPassword}
+          name="confirmPassowrd"
+          onChange={handleOnChangeRegisterInputs}
           variant="filled"
           size="small"
           label="Confirm Password"
         />
+        <label>Date of birth</label>
         <TextField
-          id="filled-hidden-label-normal"
+          value={registerInputs.dob}
+          name="dob"
+          onChange={handleOnChangeRegisterInputs}
+          hiddenLabel
+          id="filled-hidden-label-small"
           variant="filled"
+          type="date"
           size="small"
-          label="Email"
+        />
+        <label>Upload Profile Picture</label>
+        <TextField
+          name='dp'
+          id="filled-hidden-label-normal"
+          type="file"
+          size="small"
         />
             
-          <Stack spacing={2} direction="row" justifyContent="center">
+          <Stack spacing={2} direction="column" justifyContent="center">
             <Button variant='contained' size='large' color='warning' >signup</Button>
           </Stack>
       </Stack>
