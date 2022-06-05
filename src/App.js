@@ -11,6 +11,7 @@ import {
     Routes
 } from 'react-router-dom'
 import Profile from './components/pages/Profile';
+import Register from './components/pages/Register';
 
 function App() {
   return (
@@ -36,6 +37,11 @@ function App() {
                 <Profile />
               </div>
             } />
+            <Route path="/register" element={
+            <div className='reg'>
+              <Register/>
+            </div>
+            }/>
           </Routes>
       </BrowserRouter>
     </NoteState>
