@@ -45,7 +45,7 @@ const ResponsiveAppBar = () => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
+            component="div"
             href="/"
             sx={{
               mr: 2,
@@ -92,7 +92,7 @@ const ResponsiveAppBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Link to={`/${page}`} style={{textDecoration:"none"}}><Typography textAlign="center">{page}</Typography></Link>
+                    <Link to={`/${page}`} style={{textDecoration:"none"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
                   </MenuItem>
               ))}
             </Menu>
@@ -102,7 +102,7 @@ const ResponsiveAppBar = () => {
           <Typography
             variant="h5"
             noWrap
-            component="a"
+            component="div"
             href=""
             sx={{
               mr: 2,
@@ -120,9 +120,8 @@ const ResponsiveAppBar = () => {
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-               <Link to={`/${page}`} style={{textDecoration:"none"}}>
+               <Link key={page} to={`/${page}`} style={{textDecoration:"none"}}>
               <Button
-                key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
@@ -155,8 +154,8 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <Link to={`/${setting}`} style={{textDecoration:"none", color:"black"}}>
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Link key={setting} to={`/${setting}`} style={{textDecoration:"none", color:"black"}}>
+                <MenuItem onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
                 </Link>
