@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import userContext from '../context/UserContext';
 
 const pages = ['favourites', 'login', 'register', 'about'];
@@ -22,6 +22,13 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const {profile, host} = React.useContext(userContext)
+  const navigate = useNavigate()
+  const handleSettings = (setting)=>{
+      if(setting==="Logout"){
+        localStorage.removeItem("authToken")
+      }
+      navigate("/login")
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -156,7 +163,7 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <Link key={setting} to={`/${setting}`} style={{textDecoration:"none", color:"black"}}>
+                <Link key={setting} to={`/${setting}`} onClick={()=>{handleSettings(setting)}} style={{textDecoration:"none", color:"black"}}>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>

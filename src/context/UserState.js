@@ -62,6 +62,7 @@ const UserState = ({children}) => {
             const updatedUserData = {...resp.data.user, dp:newdp.join("/")}
             setProfile(updatedUserData)
             navigate("/")
+            window.location.reload()
         }).catch(err=>{
             console.log(err)
         })
@@ -79,6 +80,7 @@ const UserState = ({children}) => {
             setProfile(resp.data.user)
             fetchTheNotes()
             navigate("/")
+            window.location.reload()
         }).catch(err=>{
             console.log(err.message)
         })
