@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import noteContext from './NoteContext'
 
 const isFavourite = false
 const initialNote = [{
-  id:1,
-  title:"title1",
-  content:"content1",
+  title:"",
+  content:"",
   isFavourite,
-  color:'error.light',
-  createdAt:"now"
+  color:'',
+  createdAt:""
 }]
-
+const port = 3001;
+const host = `http://localhost:${port}`
 
 const NoteState = ({children}) => {
     const [notes, setNotes] = useState(initialNote)
@@ -19,24 +20,52 @@ const NoteState = ({children}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [radioValue, setRadioValue] = useState("")
 
+    //fetching notes
+    const fetchTheNotes = ()=>{
+      const token = localStorage.getItem("authToken")
+      axios.get(host+"/api/note", {
+        headers:{
+          authorization:"Bearer "+token
+        }
+      }).then(res=>{
+        setNotes(res.data.notes)
+      })
+    }
+
     // adding notes
     const handleSetNotes = ()=>{
       if(!validation(noteInput)) return console.log("The field is empty");
-      const id = Math.floor(Math.random()*1E9)
-      const updatedList = [...notes, {
-        id,
+      const currentNote = {
         title:noteInput.title, content:noteInput.content,
-        isFavourite:false, createdAt: new Date().toDateString(), color:radioValue
-      }]
-      setNotes(updatedList)
-      setNoteInput({title:"", content:""})
+        isFavourite:false, color:radioValue
+      }
+      const token = localStorage.getItem("authToken")
+      axios.post(host+"/api/note", currentNote, {
+        headers:{
+            "Content-Type":"application/json",
+            "authorization":"Bearer "+token
+        }
+      }).then(resp=>{
+          setNoteInput({title:"", content:""})
+          fetchTheNotes()
+      }).catch(err=>{
+          console.log(err)
+      })
     }
 
 
     // delete note
     const deleteNote = (id)=>{
-      const updatedList = notes.filter(note=> !(note.id === id))
-      setNotes(updatedList)
+      const token = localStorage.getItem("authToken")
+      axios.delete(host+"/api/note/"+id, {
+        headers:{
+            "authorization":"Bearer "+token
+        }
+      }).then(resp=>{
+          fetchTheNotes()
+      }).catch(err=>{
+          console.log(err)
+      })
     }
 
     // opening popover screen
@@ -48,16 +77,21 @@ const NoteState = ({children}) => {
 
     // updating the note
     const updateNote = ()=>{
-      const updatedList = notes.map(note=>{
-        if(note.id === updateInput.id){
-          return {
-            ...note, title:updateInput.title, content:updateInput.content, createdAt:new Date().toDateString()
-          }
-        }else{
-          return note
+      
+      const token = localStorage.getItem("authToken")
+      const currentNote = {
+        title:updateInput.title, content:updateInput.content
+      }
+      axios.patch(host+"/api/note/"+updateInput.id, currentNote, {
+        headers:{
+            "Content-Type":"application/json",
+            "authorization":"Bearer "+token
         }
+      }).then(resp=>{
+          fetchTheNotes()
+      }).catch(err=>{
+          console.log(err)
       })
-      setNotes(updatedList)
       handleClose()
     }
 
@@ -74,22 +108,44 @@ const NoteState = ({children}) => {
 
     // toggling the favourite notes 
     const toggleFavourite = (id)=>{
-      const updatedList = notes.map(note=> {
-        if(note.id === id){
-          return {
-            ...note, isFavourite:note.isFavourite? false:true
-          }
-        }else{
-          return note
+      // const updatedList = notes.map(note=> {
+      //   if(note.id === id){
+      //     return {
+      //       ...note, isFavourite:note.isFavourite? false:true
+      //     }
+      //   }else{
+      //     return note
+      //   }
+      // })
+      // setNotes(updatedList)
+      const token = localStorage.getItem("authToken")
+      axios.patch(host+"/api/note/fav/"+id, {}, {
+        headers:{
+            "Content-Type":"application/json",
+            "authorization":"Bearer "+token
         }
+      }).then(resp=>{
+          fetchTheNotes()
+      }).catch(err=>{
+          console.log(err)
       })
-      setNotes(updatedList)
+      
   }
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  useEffect(()=>{
+    const token = localStorage.getItem("authToken")
+    axios.get(host+"/api/note", {
+      headers:{
+        authorization:"Bearer "+token
+      }
+    }).then(res=>{
+      setNotes(res.data.notes)
+    })
+  },[])
   
 const values ={
   notes, 
@@ -106,7 +162,8 @@ const values ={
   updateNote,
   setRadioValue,
   radioValue,
-  handleRadioChange
+  handleRadioChange,
+  fetchTheNotes
 }
   return (
     <noteContext.Provider value={values}>

@@ -14,7 +14,7 @@ const NotesBody = () => {
       </div>
     <Grid container >
         { notes.length === 0 ? <Typography variant="h3">No notes to show</Typography>:
-        notes.map(note=> <NoteCard key={note.id} data = {note} />)
+        notes.map((note, index)=> <NoteCard key={index} data = {note} />)
         }
     </Grid>
     </Stack>

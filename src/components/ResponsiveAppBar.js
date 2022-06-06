@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import { Link } from 'react-router-dom';
 
-const pages = ['favourites', 'About'];
+const pages = ['favourites', 'login', 'register', 'about'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {

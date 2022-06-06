@@ -7,7 +7,9 @@ const Register = () => {
   
   const {
       handleOnChangeRegisterInputs,
-      registerInputs
+      registerInputs,
+      addNewUser,
+      setRegisterInputs
     } = useContext(userContext)
   return (
     <Card sx={{px:10, py:7, width:"50%", display:"flex", justifyContent:"center", bgcolor:muicolor}}>
@@ -48,9 +50,10 @@ const Register = () => {
         <TextField
           id="filled-hidden-label-normal"
           value={registerInputs.confirmPassword}
-          name="confirmPassowrd"
+          name="confirmPassword"
           onChange={handleOnChangeRegisterInputs}
           variant="filled"
+          type="password"
           size="small"
           label="Confirm Password"
         />
@@ -68,13 +71,14 @@ const Register = () => {
         <label>Upload Profile Picture</label>
         <TextField
           name='dp'
+          onChange={e=> setRegisterInputs(prev=>({...prev, dp:e.target.files[0]}))}
           id="filled-hidden-label-normal"
           type="file"
           size="small"
         />
             
           <Stack spacing={2} direction="column" justifyContent="center">
-            <Button variant='contained' size='large' color='warning' >signup</Button>
+            <Button variant='contained' size='large' color='warning' onClick={addNewUser}>signup</Button>
           </Stack>
       </Stack>
     </Card>
