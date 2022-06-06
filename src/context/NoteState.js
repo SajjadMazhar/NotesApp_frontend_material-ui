@@ -137,18 +137,12 @@ const NoteState = ({children}) => {
   };
 
   useEffect(()=>{
-    const token = localStorage.getItem("authToken")
-    axios.get(host+"/api/note", {
-      headers:{
-        authorization:"Bearer "+token
-      }
-    }).then(res=>{
-      setNotes(res.data.notes)
-    })
+    fetchTheNotes()
   },[])
   
 const values ={
   notes, 
+  host,
   noteInput,
   setNoteInput,
   handleSetNotes,

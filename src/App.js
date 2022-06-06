@@ -17,9 +17,9 @@ import UserState from './context/UserState';
 
 function App() {
   return (
-    <NoteState>
-      <UserState>
-        <BrowserRouter>
+    <BrowserRouter>
+      <NoteState>
+        <UserState>
               <ResponsiveAppBar/>
             <Routes>
               <Route path="/" element={
@@ -51,9 +51,9 @@ function App() {
                 </div>
               } />
             </Routes>
-        </BrowserRouter>
-      </UserState>
-    </NoteState>
+        </UserState>
+      </NoteState>
+    </BrowserRouter>
   );
 }
 

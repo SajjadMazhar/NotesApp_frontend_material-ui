@@ -1,5 +1,6 @@
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import noteContext from './NoteContext';
 import userContext from './UserContext'
 
@@ -15,13 +16,32 @@ const port = 3001;
 const host = `http://localhost:${port}`
 
 const UserState = ({children}) => {
+    const navigate = useNavigate()
     const {fetchTheNotes} = useContext(noteContext)
     const [registerInputs, setRegisterInputs] = useState(initialUserInputs)
-    // const [profile, setProfile] = useState(null)
+    const [profile, setProfile] = useState(null)
     const [loginInputs, setLoginInputs] = useState({email:"", password:""})
 
     const handleOnChangeRegisterInputs = (e)=>{
         setRegisterInputs(prev => ({...prev, [e.target.name]:e.target.value}))
+    }
+
+    const fetchTheUser = ()=>{
+        const token = localStorage.getItem("authToken")
+        axios.get(host+"/api/user", {
+            headers:{
+                "Content-Type":"multipart/form-data",
+                "authorization":"Bearer "+token
+            }
+        }).then(resp=>{
+            const data = resp.data.user
+            const newdp = data.dp.split("/")
+            newdp.shift()
+            const updatedUserData = {...resp.data.user, dp:newdp.join("/")}
+            setProfile(updatedUserData)
+        }).catch(err=>{
+            console.log(err)
+        })
     }
 
     const addNewUser = ()=>{
@@ -34,14 +54,20 @@ const UserState = ({children}) => {
             localStorage.setItem("authToken", resp.data.token)
             console.log("registered")
             setRegisterInputs(initialUserInputs)
+            setProfile(resp.data.user)
             fetchTheNotes()
+            const data = resp.data.user
+            const newdp = data.dp.split("/")
+            newdp.shift()
+            const updatedUserData = {...resp.data.user, dp:newdp.join("/")}
+            setProfile(updatedUserData)
+            navigate("/")
         }).catch(err=>{
             console.log(err)
         })
     }
 
     const loginUser = ()=>{
-        console.log(loginInputs)
         axios.post(host+"/api/user/signin", loginInputs, {
             headers:{
                 "Content-Type":"application/json"
@@ -50,19 +76,26 @@ const UserState = ({children}) => {
             localStorage.setItem("authToken", resp.data.token)
             console.log("Loggedin")
             setLoginInputs({email:"", password:""})
+            setProfile(resp.data.user)
             fetchTheNotes()
+            navigate("/")
         }).catch(err=>{
             console.log(err.message)
         })
     }
+    useEffect(()=>{
+        fetchTheUser()
+    },[])
 const userValues={
+    host,
     registerInputs,
     handleOnChangeRegisterInputs,
     addNewUser,
     loginInputs,
     setLoginInputs,
     setRegisterInputs,
-    loginUser
+    loginUser,
+    profile
 }
   return (
     <userContext.Provider value={userValues}>

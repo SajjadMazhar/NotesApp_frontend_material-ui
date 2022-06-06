@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import { Link } from 'react-router-dom';
+import userContext from '../context/UserContext';
 
 const pages = ['favourites', 'login', 'register', 'about'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -20,6 +21,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {profile, host} = React.useContext(userContext)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -134,7 +136,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/avatar.png" />
+                <Avatar alt="Remy Sharp" src={!profile? "" : host+"/static//"+profile.dp} />
               </IconButton>
             </Tooltip>
             <Menu
