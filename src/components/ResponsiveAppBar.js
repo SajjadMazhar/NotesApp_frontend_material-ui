@@ -15,19 +15,19 @@ import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import { Link, useNavigate } from 'react-router-dom';
 import userContext from '../context/UserContext';
 
-const pages = ['favourites', 'login', 'register', 'about'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {profile, host} = React.useContext(userContext)
+  const {profile, host, isLoggedIn, pages, settings} = React.useContext(userContext)
   const navigate = useNavigate()
+
   const handleSettings = (setting)=>{
       if(setting==="Logout"){
         localStorage.removeItem("authToken")
       }
       navigate("/login")
+      window.location.reload()
   }
 
   const handleOpenNavMenu = (event) => {
