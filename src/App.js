@@ -14,6 +14,7 @@ import Profile from './components/pages/Profile';
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
 import UserState from './context/UserState';
+import Account from './components/pages/Account';
 
 function App() {
   return (
@@ -48,6 +49,11 @@ function App() {
               <Route path="/login" element={
                 <div className='reg'>
                   <Login />
+                </div>
+              } />
+              <Route path="/Account" element={
+                <div className='reg'>
+                  <Account />
                 </div>
               } />
             </Routes>

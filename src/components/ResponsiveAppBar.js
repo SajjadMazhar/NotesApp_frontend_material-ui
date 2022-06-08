@@ -12,24 +12,22 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import userContext from '../context/UserContext';
-
-
+const pages = ['favourites', 'login', 'register', 'about']
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {profile, host, isLoggedIn, pages, settings} = React.useContext(userContext)
-  const navigate = useNavigate()
+  const {profile, host, isLoggedIn, setIsloggedIn } = React.useContext(userContext)
 
-  const handleSettings = (setting)=>{
-      if(setting==="Logout"){
-        localStorage.removeItem("authToken")
-      }
-      navigate("/login")
+  const handleLogOut = (setting)=>{
+    if(setting === 'logout'){
+      localStorage.removeItem("authToken")
+      setIsloggedIn(false)
       window.location.reload()
+    }
   }
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -99,11 +97,18 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {!isLoggedIn?pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <Link to={`/${page}`} style={{textDecoration:"none"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
                   </MenuItem>
-              ))}
+
+              )):
+              pages.filter(page=> (page==="login" || page==="register")? false:true)
+              .map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Link to={`/${page}`} style={{textDecoration:"none"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
+                  </MenuItem>))
+              }
             </Menu>
           </Box>
           <NoteAltIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -128,16 +133,18 @@ const ResponsiveAppBar = () => {
           </Typography>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-               <Link key={page} to={`/${page}`} style={{textDecoration:"none"}}>
-              <Button
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-               {page}
-              </Button>
-              </Link>
-            ))}
+          {!isLoggedIn?pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Link to={`/${page}`} style={{textDecoration:"none", color:"white"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
+                  </MenuItem>
+
+              )):
+              pages.filter(page=> (page==="login" || page==="register")? false:true)
+              .map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Link to={`/${page}`} style={{textDecoration:"none", color:"white"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
+                  </MenuItem>))
+              }
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -162,8 +169,15 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <Link key={setting} to={`/${setting}`} onClick={()=>{handleSettings(setting)}} style={{textDecoration:"none", color:"black"}}>
+              {isLoggedIn? settings.map((setting) => (
+                <Link key={setting} to={`/${setting}`} onClick={()=>handleLogOut(setting.toLowerCase())} style={{textDecoration:"none", color:"black"}}>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+                </Link>
+              )):
+              settings.filter((setting) => (setting==="Logout")? false:true).map((setting) => (
+                <Link key={setting} to={`/${setting}`} onClick={()=>handleLogOut(setting.toLowerCase())} style={{textDecoration:"none", color:"black"}}>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
