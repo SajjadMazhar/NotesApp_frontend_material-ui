@@ -15,12 +15,15 @@ import Register from './components/pages/Register';
 import Login from './components/pages/Login';
 import UserState from './context/UserState';
 import Account from './components/pages/Account';
+import MyAlert from './components/MyAlert';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/'>
       <NoteState>
         <UserState>
+              <MyAlert/>
+              
               <ResponsiveAppBar/>
             <Routes>
               <Route path="/" element={

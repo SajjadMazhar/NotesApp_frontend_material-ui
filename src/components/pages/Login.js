@@ -7,8 +7,9 @@ const muicolor = orange[200]
 const Login = () => {
   const {loginUser, loginInputs, setLoginInputs} = useContext(userContext)
   return (
+    <>
+    
     <Card sx={{px:10, py:7, width:"50%", display:"flex", justifyContent:"center", bgcolor:muicolor}}>
-      
       <Stack spacing={2} sx={{width:"60%"}} >
         <Typography variant="h5" sx={{p:2}} align='center'>
           Login for NoteIt
@@ -41,6 +42,7 @@ const Login = () => {
           </Stack>
       </Stack>
     </Card>
+    </>
   )
 }
 

@@ -18,7 +18,6 @@ const authPath = ['/', '/favourites', '/Profile', '/Logout', '/Account']
 
 const UserState = ({children}) => {
 
-
     const navigate = useNavigate()
     const {fetchTheNotes} = useContext(noteContext)
     const [registerInputs, setRegisterInputs] = useState(initialUserInputs)
@@ -26,9 +25,17 @@ const UserState = ({children}) => {
     const [loginInputs, setLoginInputs] = useState({email:"", password:""})
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [updatePassInput, setUpdatePassInput] = useState({oldPassword:"", newPassword:""})
+    const [alertDetails, setAlertDetails] = useState({status:"", title:"", message:""})
+    const [display, setDisplay] = useState("none")
 
     const handleOnChangeRegisterInputs = (e)=>{
         setRegisterInputs(prev => ({...prev, [e.target.name]:e.target.value}))
+    }
+
+    const timer = ()=>{
+        setTimeout(() => {
+            setDisplay("none")
+        }, 3000);
     }
 
     const fetchTheUser = ()=>{
@@ -66,11 +73,16 @@ const UserState = ({children}) => {
             newdp.shift()
             const updatedUserData = {...resp.data.user, dp:newdp.join("/")}
             setProfile(updatedUserData)
-            // navigate("/")
-            window.location.reload()
+            navigate("/")
+            setAlertDetails({status:"success", message:"successfully registered into NoteIt", title:"Success"})
+            setDisplay("block")
+            // window.location.reload()
         }).catch(err=>{
+            setAlertDetails({status:"success", message:"successfully registered into NoteIt", title:"Success"})
+            setDisplay("block")
             console.log(err)
         })
+        timer()
     }
 
     const loginUser = ()=>{
@@ -79,15 +91,21 @@ const UserState = ({children}) => {
                 "Content-Type":"application/json"
             }
         }).then(resp=>{
+            
             localStorage.setItem("authToken", resp.data.token)
             console.log("Loggedin")
             setLoginInputs({email:"", password:""})
             setProfile(resp.data.user)
             navigate("/")
-            window.location.reload()
+            setAlertDetails({status:"success", message:"successfully logged in", title:"Success"})
+            setDisplay("block")
+            // window.location.reload()
         }).catch(err=>{
             console.log(err.message)
+            setAlertDetails({status:"warning", message:"something failed", title:"Unable to login"})
+            setDisplay("block")
         })
+        timer()
     }
 
     const handleChangePassword = ()=>{
@@ -130,7 +148,11 @@ const userValues={
     updatePassInput,
     setUpdatePassInput,
     isLoggedIn,
-    setIsLoggedIn
+    setIsLoggedIn,
+    alertDetails,
+    setAlertDetails,
+    display,
+    setDisplay
 }
   return (
     <userContext.Provider value={userValues}>

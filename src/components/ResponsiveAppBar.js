@@ -99,14 +99,14 @@ const ResponsiveAppBar = () => {
             >
               {!isLoggedIn?pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Link to={`/${page}`} style={{textDecoration:"none"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
+                    <Link to={`/${page}`} style={{textDecoration:"none", color:"black"}}><Typography component="div" textAlign="center">{page.toUpperCase()}</Typography></Link>
                   </MenuItem>
 
               )):
               pages.filter(page=> (page==="login" || page==="register")? false:true)
               .map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Link to={`/${page}`} style={{textDecoration:"none"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
+                    <Link to={`/${page}`} style={{textDecoration:"none", color:"black"}}><Typography component="div" textAlign="center">{page.toUpperCase()}</Typography></Link>
                   </MenuItem>))
               }
             </Menu>
@@ -135,14 +135,14 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           {!isLoggedIn?pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Link to={`/${page}`} style={{textDecoration:"none", color:"white"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
+                    <Link to={`/${page}`} style={{textDecoration:"none", color:"white"}}><Typography component="div" textAlign="center">{page.toUpperCase()}</Typography></Link>
                   </MenuItem>
 
               )):
               pages.filter(page=> (page==="login" || page==="register")? false:true)
               .map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Link to={`/${page}`} style={{textDecoration:"none", color:"white"}}><Typography component="div" textAlign="center">{page}</Typography></Link>
+                    <Link to={`/${page}`} style={{textDecoration:"none", color:"white"}}><Typography component="div" textAlign="center">{page.toUpperCase()}</Typography></Link>
                   </MenuItem>))
               }
           </Box>

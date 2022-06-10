@@ -14,6 +14,7 @@ const port = 3001;
 const host = `http://localhost:${port}`
 
 const NoteState = ({children}) => {
+    const [isLoading, setIsLoading] = useState(true)
     const [notes, setNotes] = useState(initialNote)
     const [noteInput, setNoteInput] = useState({title:"", content:""})
     const [updateInput, setUpdateInput] = useState({id:null, title:"", content:""})
@@ -28,6 +29,7 @@ const NoteState = ({children}) => {
           authorization:"Bearer "+token
         }
       }).then(res=>{
+        setIsLoading(false)
         setNotes(res.data.notes)
       })
     }
@@ -157,7 +159,8 @@ const values ={
   setRadioValue,
   radioValue,
   handleRadioChange,
-  fetchTheNotes
+  fetchTheNotes,
+  isLoading
 }
   return (
     <noteContext.Provider value={values}>
