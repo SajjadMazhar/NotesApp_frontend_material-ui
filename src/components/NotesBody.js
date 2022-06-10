@@ -8,14 +8,14 @@ const NotesBody = () => {
   const {notes, isLoading} = useContext(noteContext)
   return (
     <Stack>
-      <div>
           <hr style={{margin:"2rem"}}/>
-        {isLoading?<Loading/>:""}
-        <Typography variant="h4">
-          Your Notes:
+      <div style={{display:"flex", justifyContent:"center"}}>
+        <Typography variant="h4" sx={{mb:4}} style={{borderBottom:"5px dotted black"}}>
+          YOUR NOTES
         </Typography>
       </div>
-    <Grid container >
+        {isLoading?<Loading/>:""}
+    <Grid container justifyContent="center">
         { notes.length===0 ? <Typography variant="h3">No notes to show</Typography>:
         notes.map((note, index)=> <NoteCard key={index} data = {note} />)
         }

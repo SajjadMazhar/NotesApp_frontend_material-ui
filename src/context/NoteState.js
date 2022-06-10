@@ -19,17 +19,32 @@ const NoteState = ({children}) => {
     const [noteInput, setNoteInput] = useState({title:"", content:""})
     const [updateInput, setUpdateInput] = useState({id:null, title:"", content:""})
     const [anchorEl, setAnchorEl] = useState(null);
-    const [radioValue, setRadioValue] = useState("")
+    const [radioValue, setRadioValue] = useState("");
+    const [pageNo, setPageNo] = useState(0)
+    const [noteQty, setNoteQty] = useState(null)
+
+    const nextPage = ()=>{
+      setPageNo(prev=>prev+1)
+      fetchTheNotes(8, pageNo)
+    }
+    const previousPage = ()=>{
+      if(pageNo===0){
+        return
+      }
+      setPageNo(prev=>prev-1)
+      fetchTheNotes(8, pageNo)
+    }
 
     //fetching notes
-    const fetchTheNotes = ()=>{
+    const fetchTheNotes = (take=8, pageNo=0)=>{
       const token = localStorage.getItem("authToken")
-      axios.get(host+"/api/note", {
+      axios.get(host+`/api/note?take=${take}&pageNo=${pageNo}`, {
         headers:{
           authorization:"Bearer "+token
         }
       }).then(res=>{
         setIsLoading(false)
+        setNoteQty(res.data.totalData)
         setNotes(res.data.notes)
       })
     }
@@ -64,7 +79,7 @@ const NoteState = ({children}) => {
             "authorization":"Bearer "+token
         }
       }).then(resp=>{
-          fetchTheNotes()
+          fetchTheNotes(8, pageNo)
       }).catch(err=>{
           console.log(err)
       })
@@ -90,7 +105,7 @@ const NoteState = ({children}) => {
             "authorization":"Bearer "+token
         }
       }).then(resp=>{
-          fetchTheNotes()
+          fetchTheNotes(8,pageNo)
       }).catch(err=>{
           console.log(err)
       })
@@ -127,7 +142,7 @@ const NoteState = ({children}) => {
             "authorization":"Bearer "+token
         }
       }).then(resp=>{
-          fetchTheNotes()
+          fetchTheNotes(8, pageNo)
       }).catch(err=>{
           console.log(err)
       })
@@ -139,8 +154,8 @@ const NoteState = ({children}) => {
   };
 
   useEffect(()=>{
-    fetchTheNotes()
-  },[])
+    fetchTheNotes(8, pageNo)
+  },[pageNo])
   
 const values ={
   notes, 
@@ -160,7 +175,11 @@ const values ={
   radioValue,
   handleRadioChange,
   fetchTheNotes,
-  isLoading
+  isLoading,
+  nextPage,
+  previousPage,
+  pageNo,
+  noteQty
 }
   return (
     <noteContext.Provider value={values}>
