@@ -99,7 +99,7 @@ const UserState = ({children}) => {
             navigate("/")
             setAlertDetails({status:"success", message:"successfully logged in", title:"Success"})
             setDisplay("block")
-            // window.location.reload()
+            window.location.reload()
         }).catch(err=>{
             console.log(err.message)
             setAlertDetails({status:"warning", message:"something failed", title:"Unable to login"})
@@ -131,7 +131,7 @@ const UserState = ({children}) => {
 
         }else{
             setIsLoggedIn(true)
-            fetchTheUser()
+            fetchTheUser(8, 0)
         }
     },[isLoggedIn, navigate])
 const userValues={

@@ -16,7 +16,8 @@ const NotesBody = () => {
       </div>
         {isLoading?<Loading/>:""}
     <Grid container justifyContent="center">
-        { notes.length===0 ? <Typography variant="h3">No notes to show</Typography>:
+        { 
+        notes.length===0 ? <Typography variant="h3">No notes to show</Typography>:
         notes.map((note, index)=> <NoteCard key={index} data = {note} />)
         }
     </Grid>

@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import noteContext from '../../context/NoteContext'
 import NoteCard from '../NoteCard'
 const Favourites = () => {
-  const {notes} = useContext(noteContext)
+  const {favourites} = useContext(noteContext)
   return (
     <Stack>
       <div>
@@ -13,9 +13,7 @@ const Favourites = () => {
         </Typography>
       </div>
     <Grid container >
-        { notes.length === 0 ? <Typography variant="h3">No notes to show</Typography>:
-        notes
-        .filter(note=> note.isFavourite)
+        { favourites.length===0?"": favourites
         .map(note=> <NoteCard key={note.id} data = {note} />)
         }
     </Grid>

@@ -22,6 +22,7 @@ const NoteState = ({children}) => {
     const [radioValue, setRadioValue] = useState("");
     const [pageNo, setPageNo] = useState(0)
     const [noteQty, setNoteQty] = useState(null)
+    const [favourites, setFavourites] = useState([])
 
     const nextPage = ()=>{
       setPageNo(prev=>prev+1)
@@ -46,6 +47,7 @@ const NoteState = ({children}) => {
         setIsLoading(false)
         setNoteQty(res.data.totalData)
         setNotes(res.data.notes)
+        setFavourites(res.data.favs)
       })
     }
 
@@ -165,6 +167,7 @@ const values ={
   handleSetNotes,
   toggleFavourite,
   deleteNote,
+  favourites,
   handlePopover,
   anchorEl,
   handleClose,
