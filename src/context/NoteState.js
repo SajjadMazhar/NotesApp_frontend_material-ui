@@ -127,16 +127,7 @@ const NoteState = ({children}) => {
 
     // toggling the favourite notes 
     const toggleFavourite = (id)=>{
-      // const updatedList = notes.map(note=> {
-      //   if(note.id === id){
-      //     return {
-      //       ...note, isFavourite:note.isFavourite? false:true
-      //     }
-      //   }else{
-      //     return note
-      //   }
-      // })
-      // setNotes(updatedList)
+      
       const token = localStorage.getItem("authToken")
       axios.patch(host+"/api/note/fav/"+id, {}, {
         headers:{
@@ -156,7 +147,7 @@ const NoteState = ({children}) => {
   };
 
   useEffect(()=>{
-    fetchTheNotes(8, pageNo)
+    if(localStorage.getItem("authToken")) fetchTheNotes(8, pageNo);
   },[pageNo])
   
 const values ={

@@ -133,6 +133,9 @@ const UserState = ({children}) => {
             setIsLoggedIn(true)
             fetchTheUser(8, 0)
         }
+        const title = window.location.pathname.slice(1).toUpperCase()
+        document.title = `NoteIt - ${title===""?"Home":title}`
+
     },[isLoggedIn, navigate])
 const userValues={
     host,

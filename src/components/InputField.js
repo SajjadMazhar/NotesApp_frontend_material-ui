@@ -3,6 +3,7 @@ import {TextField, Stack, Button, Grid} from '@mui/material'
 import noteContext from '../context/NoteContext'
 import Radios from './Radios'
 
+
 const InputField = () => {
   const {
     setNoteInput,
@@ -14,6 +15,7 @@ const InputField = () => {
         <TextField
             id="outlined-multiline-flexible"
             label="Title"
+            color='warning'
             multiline
             rows={1}
             style={{width:"60%"}}
@@ -27,6 +29,7 @@ const InputField = () => {
             id="outlined-multiline-flexible"
             label="Content"
             multiline
+            color='warning'
             rows={4}
             style={{width:"60%"}}
             sx={{m:2}}

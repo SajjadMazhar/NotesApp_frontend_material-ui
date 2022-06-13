@@ -8,18 +8,19 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import { Link } from 'react-router-dom';
 import userContext from '../context/UserContext';
+import designContext from '../context/DesignContext';
 const pages = ['favourites', 'login', 'register', 'about']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const {profile, host, isLoggedIn, setIsloggedIn } = React.useContext(userContext)
+  const {toggleMode, mode} = React.useContext(designContext)
 
   const handleLogOut = (setting)=>{
     if(setting === 'logout'){
@@ -44,7 +45,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static" style={{backgroundColor:"#ed6c02"}}>
+    <AppBar position="sticky" style={{backgroundColor:mode==="light"?"#ed6c02":"#282828"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <NoteAltIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

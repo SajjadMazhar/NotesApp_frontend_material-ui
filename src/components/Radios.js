@@ -18,12 +18,12 @@ export default function Radios() {
         value={radioValue}
         onChange={handleRadioChange}
       >
-        <FormControlLabel value="" control={<Radio />} label="Classic" />
-        <FormControlLabel value="error.light" control={<Radio />} label="Red" />
-        <FormControlLabel value="warning.light" control={<Radio />} label="Yellow" />
-        <FormControlLabel value="success.light" control={<Radio />} label="Green" />
-        <FormControlLabel value="primary.light" control={<Radio />} label="Blue" />
-        <FormControlLabel value="secondary.light" control={<Radio />} label="Purple" />
+        <FormControlLabel value="" control={<Radio color='warning' />} label="Classic" />
+        <FormControlLabel value="error.light" control={<Radio color='warning' />} label="Red" />
+        <FormControlLabel value="warning.light" control={<Radio color='warning' />} label="Yellow" />
+        <FormControlLabel value="success.light" control={<Radio color='warning' />} label="Green" />
+        <FormControlLabel value="primary.light" control={<Radio color='warning' />} label="Blue" />
+        <FormControlLabel value="secondary.light" control={<Radio color='warning' />} label="Purple" />
         
       </RadioGroup>
     </FormControl>
